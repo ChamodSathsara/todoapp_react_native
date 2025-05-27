@@ -17,6 +17,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import "../global.css";
 import AddTaskModal from "./addNew";
 
 const HomeScreen = () => {
@@ -313,8 +314,15 @@ const HomeScreen = () => {
                     </View>
 
                     {/* Enhanced Date/Time Display */}
-                    <View style={styles.dateTimeContainer}>
-                      <Ionicons name="time-outline" size={14} color="#666" />
+                    <View
+                      className="flex-col justify-center items-center "
+                      style={styles.dateTimeContainer}
+                    >
+                      <Ionicons
+                        name="calendar-outline"
+                        size={14}
+                        color="#666"
+                      />
                       <Text style={styles.timeTextDate}>
                         {formatDateTime(task.date, task.time)}
                       </Text>
@@ -505,15 +513,15 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  timeText: {
-    fontSize: 12,
-    fontWeight: "500",
-    paddingHorizontal: 0,
-    paddingBottom: 4,
-    paddingTop: 0,
-    borderRadius: 12,
-    overflow: "hidden",
-  },
+  // timeText: {
+  //   fontSize: 12,
+  //   fontWeight: "500",
+  //   paddingHorizontal: 0,
+  //   paddingBottom: 4,
+  //   paddingTop: 0,
+  //   borderRadius: 12,
+  //   overflow: "hidden",
+  // },
   timeUrgent: {
     // Red with opacity
     color: "#FF6B6B",
@@ -576,6 +584,22 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     padding: 4,
+  },
+  dateTimeRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+
+  dateText: {
+    fontSize: 12,
+    color: "#666",
+    marginRight: 8,
+  },
+
+  timeText: {
+    fontSize: 12,
+    color: "#666",
   },
 });
 
