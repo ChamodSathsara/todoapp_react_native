@@ -1,5 +1,9 @@
 import CreativeLoader from "@/components/Loading";
-import { getTasks, updateTask } from "@/components/Servicess/getTasks";
+import {
+  deleteTask,
+  getTasks,
+  updateTask,
+} from "@/components/Servicess/getTasks";
 import AppHeader from "@/components/layout/header";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -78,8 +82,9 @@ const CalendarScreen = () => {
     );
   };
 
-  const deleteTask = (taskId: number) => {
-    setTasks(tasks.filter((task) => task.id !== taskId));
+  const deleteTaskon = (taskId: any) => {
+    deleteTask(taskId);
+    fetchTasks();
   };
   const filteredTasks = tasks.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -240,7 +245,10 @@ const CalendarScreen = () => {
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.iconButton}
-                        onPress={() => deleteTask(task.id)}
+                        onPress={() => {
+                          console.log(task.id);
+                          deleteTaskon(task.id);
+                        }}
                       >
                         <Ionicons
                           name="trash-outline"

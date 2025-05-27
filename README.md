@@ -105,7 +105,7 @@ npm install
 npx expo start
 
 🎨 UI/UX Design
-Built using Figma
+Built using Figma link- https://www.figma.com/design/rdXIIiYFiSuTyspMbFecxF/todo-App?node-id=0-1&t=zlxsdCJ0KCK84BvT-1
 
 High-fidelity UI designs and wireframes are included in the design/ directory
 
