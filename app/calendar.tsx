@@ -28,6 +28,7 @@ import {
 import AddTaskModal from "./addNew";
 
 const CalendarScreen = () => {
+  // State for filter, modal, dates, loading, error and tasks
   const [selectedFilter, setSelectedFilter] = useState();
   const [showAddModal, setShowAddModal] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -35,10 +36,13 @@ const CalendarScreen = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [tasks, setTasks] = useState<any[]>([]);
+
+  // Load tasks when component starts
   useEffect(() => {
     fetchTasks();
   }, []);
 
+  // Function to get tasks from server
   const fetchTasks = async () => {
     try {
       setLoading(true);
@@ -52,12 +56,13 @@ const CalendarScreen = () => {
     }
   };
 
-  // Calendar logic
+  // Get all days in current month
   const monthDays = eachDayOfInterval({
     start: startOfMonth(currentDate),
     end: endOfMonth(currentDate),
   });
 
+  // Change task status when clicked
   const toggleTaskStatus = (taskId: number) => {
     setTasks((prevTasks) =>
       prevTasks.map(async (task) => {
@@ -73,7 +78,7 @@ const CalendarScreen = () => {
           if (task.status === "Missed") {
             return task;
           }
-          // Allow Done tasks to be reverted (if needed)
+          // Allow Done tasks to be reverted
           return { ...task, status: "Pending" };
         }
 
@@ -82,14 +87,18 @@ const CalendarScreen = () => {
     );
   };
 
+  // Delete task function
   const deleteTaskon = (taskId: any) => {
     deleteTask(taskId);
     fetchTasks();
   };
+
+  // Sort tasks by date (newest first)
   const filteredTasks = tasks.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
+  // Show loading screen if loading
   if (loading) {
     return <CreativeLoader />;
   }
@@ -99,7 +108,7 @@ const CalendarScreen = () => {
       <ScrollView>
         <AppHeader title="Calendar" />
 
-        {/* Month Navigation */}
+        {/* Month change buttons and display */}
         <View style={styles.monthNavigation}>
           <TouchableOpacity
             onPress={() => setCurrentDate(subMonths(currentDate, 1))}
@@ -118,14 +127,16 @@ const CalendarScreen = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Calendar Grid */}
+        {/* Calendar day boxes */}
         <View style={styles.calendarGrid}>
+          {/* Day names (Sun, Mon, etc) */}
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
             <Text key={day} style={styles.weekDayHeader}>
               {day}
             </Text>
           ))}
 
+          {/* All days in month */}
           {monthDays.map((date, index) => (
             <TouchableOpacity
               key={index}
@@ -144,6 +155,7 @@ const CalendarScreen = () => {
               >
                 {format(date, "d")}
               </Text>
+              {/* Small dots under date for tasks */}
               <View style={styles.taskDots}>
                 {filteredTasks
                   .filter((task) => isSameDay(new Date(task.date), date))
@@ -161,12 +173,13 @@ const CalendarScreen = () => {
           ))}
         </View>
 
-        {/* Selected Date Tasks */}
+        {/* Tasks for selected date */}
         <Text style={styles.tasksHeader}>
           Tasks for {format(selectedDate, "MMM dd, yyyy")}
         </Text>
 
         <View style={styles.taskList}>
+          {/* Show tasks only for selected date */}
           {tasks
             .filter((task) => isSameDay(new Date(task.date), selectedDate))
             .map((task) => (
@@ -177,6 +190,7 @@ const CalendarScreen = () => {
                   task.status === "Done" && styles.completedTask,
                 ]}
               >
+                {/* Checkbox button */}
                 <TouchableOpacity
                   style={styles.checkButton}
                   onPress={() => {
@@ -200,6 +214,7 @@ const CalendarScreen = () => {
                   />
                 </TouchableOpacity>
 
+                {/* Task details */}
                 <View style={styles.taskContent}>
                   <Text
                     style={[
@@ -218,6 +233,7 @@ const CalendarScreen = () => {
                     {task.description}
                   </Text>
                   <View style={styles.taskMeta}>
+                    {/* Task status tag */}
                     <View
                       style={[
                         styles.statusTag,
@@ -227,13 +243,14 @@ const CalendarScreen = () => {
                       <Text style={styles.tagText}>{task.status}</Text>
                     </View>
                     <Text style={styles.timeText}>{task.time}</Text>
+                    {/* Edit and delete buttons */}
                     <View style={styles.actionButtons}>
                       <TouchableOpacity
                         style={styles.iconButton}
                         onPress={() =>
                           router.push({
                             pathname: "/updateTask/[taskId]",
-                            params: { taskId: task.id }, // Make sure `task.id` is a string
+                            params: { taskId: task.id },
                           })
                         }
                       >
@@ -263,13 +280,12 @@ const CalendarScreen = () => {
             ))}
         </View>
       </ScrollView>
-      {/* Floating Add Button */}
+      {/* Floating add button at bottom */}
       <View style={styles.container}>
         <AddTaskModal
           visible={showAddModal}
           onClose={() => setShowAddModal(false)}
           onSubmit={(taskData) => {
-            // Handle task creation here
             console.log("New Task:", taskData);
           }}
         />
@@ -284,7 +300,7 @@ const CalendarScreen = () => {
   );
 };
 
-// Helper function and styles
+// Get color based on task status
 const getStatusColor = (status: any) => {
   switch (status) {
     case "Done":
@@ -298,6 +314,7 @@ const getStatusColor = (status: any) => {
   }
 };
 
+// All style definitions
 const styles = StyleSheet.create({
   container: {
     flex: 1,

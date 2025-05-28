@@ -75,6 +75,7 @@ const TaskScreen = () => {
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
+  // delete task
   const deleteTaskon = (taskId: any) => {
     deleteTask(taskId);
     fetchTasks();
@@ -110,6 +111,7 @@ const TaskScreen = () => {
     }
   };
 
+  //tick after done tasks
   const toggleTaskDone = (taskId: number) => {
     setTasks((prevTasks) =>
       prevTasks.map(async (task) => {
@@ -125,7 +127,7 @@ const TaskScreen = () => {
           if (task.status === "Missed") {
             return task;
           }
-          // Allow Done tasks to be reverted (if needed)
+          // Allow Done tasks to be reverted
           return { ...task, status: "Pending" };
         }
 
@@ -177,10 +179,10 @@ const TaskScreen = () => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={["#2A3B4D"]} // Android
-            tintColor="#2A3B4D" // iOS
-            title="Pull to refresh" // iOS
-            titleColor="#2A3B4D" // iOS
+            colors={["#2A3B4D"]}
+            tintColor="#2A3B4D"
+            title="Pull to refresh"
+            titleColor="#2A3B4D"
           />
         }
       >
@@ -254,7 +256,7 @@ const TaskScreen = () => {
                 onPress={() =>
                   router.push({
                     pathname: "/updateTask/[taskId]",
-                    params: { taskId: task.id }, // Make sure `task.id` is a string
+                    params: { taskId: task.id },
                   })
                 }
               >

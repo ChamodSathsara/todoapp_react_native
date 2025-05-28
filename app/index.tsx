@@ -183,16 +183,18 @@ const HomeScreen = () => {
     <View style={styles.container}>
       {/* Header */}
       <AppHeader title="Home" />
+
+      {/* Body */}
       <ScrollView
         style={styles.content}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={["#2A3B4D"]} // Android
-            tintColor="#2A3B4D" // iOS
-            title="Pull to refresh" // iOS
-            titleColor="#2A3B4D" // iOS
+            colors={["#2A3B4D"]}
+            tintColor="#2A3B4D"
+            title="Pull to refresh"
+            titleColor="#2A3B4D"
           />
         }
       >

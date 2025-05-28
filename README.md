@@ -1,6 +1,6 @@
 # 🩺 Dr. Nimal's Tasks – React Native Todo App
 
-A simple, elegant, and powerful mobile application designed for **Dr. Nimal** — a busy professional who needs to manage a hectic schedule efficiently. This React Native app, built using **Expo** and **Expo Router**, connects with a RESTful API to provide full CRUD functionality for task management. It offers a clean interface with a smooth user experience tailored for productivity on mobile devices.
+A simple, elegant, and powerful mobile application designed for Dr. Nimal — a busy professional who needs to manage a hectic schedule efficiently. This React Native app, built using Expo and Expo Router, connects with a RESTful API to provide full CRUD functionality for task management. It offers a clean interface with a smooth user experience tailored for productivity on mobile devices.
 
 ---
 
@@ -114,6 +114,6 @@ Screens include: Home,Tasks, Add Task, Edit Task, Calendar
 📌 Assumptions
 Authentication is not required
 Tasks include only title and description
-No offline storage (cloud-only via REST API)
+No offline storage (via REST API)
 No dark mode included in this version
 ```
